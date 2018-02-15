@@ -142,7 +142,7 @@ class CodeItem(BaseItem):
 		''' 转换item对象到id '''
 		self.debug_info_id = context.getSectionIdByItem(TYPE_DEBUG_INFO_ITEM, self.debug_info_item)
 
-	def tostring(self):
+	def tostring(self, context = None):
 		"""
 		转换为可打印的字符串
 		"""
@@ -154,6 +154,14 @@ class CodeItem(BaseItem):
 		string += 'debug_info:        [%.4x %.4d],\n' % (self.debug_info_off, self.debug_info_id)
 		string += 'insns_size:        %.4d\n' % self.insns_size
 		string += 'insns:             [%s]\n' % convertBytesToHexStr(self.insns)
+
+		if not context is None:
+			insns_class = context.getInsnsClass()
+			if not insns_class is None:
+				insns = insns_class(self.insns)
+				string += '\ndisassemble: {\n'
+				string += insns.tostring(context)
+				string += '}\n\n'
 
 		if self.tries_size > 0:
 			string += 'tries_size:        %.4d\n' % self.tries_size

@@ -31,4 +31,4 @@ class FieldIdListSection(BaseSection):
 		type_string = self.getContextDesc(TYPE_TYPE_ID_ITEM, item.getTypeId())
 		name_string = self.getContextDesc(TYPE_STRING_DATA_ITEM, item.getNameId())
 
-		return 'class: %s type: %s name: %s' % (class_string, type_string, name_string)
+		return '%s -> %s { %s }' % (class_string, name_string, type_string)

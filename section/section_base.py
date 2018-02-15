@@ -243,9 +243,9 @@ class BaseSection(BaseItem):
 		string += '%s ---> [%d]\n' % (self.section_name, self.item_size)
 		for i in range(self.item_size):
 			# 使用item描述
-			# string += '%.4d: %s\n' % (i, self.getItemDesc(i))
+			string += '%.4d: %s\n' % (i, self.getItemDesc(i))
 			# 使用item自身的tostring()
-			string += '%.4d: %s\n' % (i, self.getItemString(i))
+			# string += '%.4d: %s\n' % (i, self.getItemString(i))
 
 		string += '-*-' * 30 + '\n'
 

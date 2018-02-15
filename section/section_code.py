@@ -17,3 +17,13 @@ class CodeSection(BaseSection):
 		"""
 		super(CodeSection, self).__init__(context, TYPE_CODE_ITEM, bytes[off:], size)
 
+	def getItemDesc(self, index):
+		"""
+		获取子项的字符串描述
+		index: 索引
+		"""
+		if index < self.item_size:
+			item = self.item_list[index]
+			return item.tostring(self.context)
+
+		return '%.4d' % index

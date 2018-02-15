@@ -31,4 +31,4 @@ class MethodIdListSection(BaseSection):
 		proto_string = self.getContextDesc(TYPE_PROTO_ID_ITEM, item.getProtoId())
 		name_string = self.getContextDesc(TYPE_STRING_DATA_ITEM, item.getNameId())
 
-		return 'class: %s proto: [%s] name: %s' % (class_string, proto_string, name_string)
+		return '%s -> %s { %s }' % (class_string, name_string, proto_string)

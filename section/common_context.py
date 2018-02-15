@@ -16,6 +16,9 @@ class Context(object):
 		for section_type in type_list:
 			self.section_map[section_type] = None
 
+		# 反汇编的类，外部可以绑定
+		self.insns_class = None
+
 	def getSectionList(self):
 		"""
 		获取section列表
@@ -104,3 +107,17 @@ class Context(object):
 		if section:
 			return section.getIdByItem(item)
 		return -1
+
+	def setInsnsClass(self, insns_class):
+		"""
+		设置反汇编的解析类
+		insns_class:    反汇编的解析类
+		"""
+		self.insns_class = insns_class
+
+	def getInsnsClass(self):
+		"""
+		获取反汇编的解析类
+		"""
+		return self.insns_class
+
