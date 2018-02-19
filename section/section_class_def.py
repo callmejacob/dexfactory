@@ -33,6 +33,7 @@ class ClassDefListSection(BaseSection):
 
 		string = ''
 
+		# string += 'access: %.4x\n' % item.access_flags
 		string += '[%s] extends [%s] in [%s]' % (class_string, super_class_string, source_file_string)
 		string += ' %s' % self.getContextDesc(TYPE_CLASS_DATA_ITEM, item.class_data_id)
 

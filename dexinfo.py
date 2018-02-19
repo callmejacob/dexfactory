@@ -11,7 +11,7 @@ class DexInfo(object):
 	dex信息
 	"""
 
-	def __init__(self, dex_path):
+	def __init__(self, dex_path, dex_bytes = None):
 		"""
 		初始化
 		dex_path: dex的文件路径
@@ -23,7 +23,10 @@ class DexInfo(object):
 		self.dex_path = dex_path
 
 		# 获取dex的字节数组
-		self.dex_bytes = np.fromfile(dex_path, dtype=np.ubyte)
+		if dex_bytes is None:
+			self.dex_bytes = np.fromfile(dex_path, dtype=np.ubyte)
+		else:
+			self.dex_bytes = dex_bytes
 
 		# context
 		self.context = Context()
@@ -277,7 +280,8 @@ class DexInfo(object):
 		"""
 		if dex_path is None:
 			dex_path = self.dex_path
-		self.dex_bytes.tofile(dex_path)
+		if not self.dex_path is None:
+			self.dex_bytes.tofile(dex_path)
 
 	def recalSigAndChecksum(self):
 		"""
@@ -301,3 +305,11 @@ class DexInfo(object):
 		# 更新checksum到dex_bytes中
 		self.header_section.encode()
 		dex_bytes[0x00:self.header_section.getBytesSize()] = self.header_section.getBytes()
+
+	def tostring(self):
+		string = ''
+		section_list = self.context.getSectionList()
+		for section in section_list:
+			if section:
+				string += section.tostring()
+		return string
