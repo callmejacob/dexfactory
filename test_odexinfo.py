@@ -1,7 +1,7 @@
 # -- coding: utf-8 --
 
 from odex import *
-from dexinfo import *
+from dex import *
 
 odex_path = './data/classes.odex'
 

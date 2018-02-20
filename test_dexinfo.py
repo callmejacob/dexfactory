@@ -1,6 +1,6 @@
 # -- coding: utf-8 --
 
-from dexinfo import *
+from dex import *
 from test_modify import *
 
 dex_path = './data/classes.dex'

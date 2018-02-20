@@ -1,6 +1,6 @@
 # -- coding: utf-8 --
 
-from section import *
+from dex import *
 
 def cmpStringItem(item1, item2):
 	if item1.string_data < item2.string_data:

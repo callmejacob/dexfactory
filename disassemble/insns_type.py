@@ -284,6 +284,10 @@ op_map = {
 
 }
 
+# 格式化op描述
+def formatOp(op):
+	return '%-24s' % op_map[op]
+
 
 """
 常量池类型定义

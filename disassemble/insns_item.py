@@ -37,7 +37,7 @@ class InsnsItem(object):
 
 			op = bytes[0x00]
 
-			self.desc = '%s' % op_map[op]
+			self.desc = '%s' % formatOp(op)
 
 		elif self.format_id == '12x' or self.format_id == '11n':
 			self.bytes_size = 0x02
@@ -47,9 +47,9 @@ class InsnsItem(object):
 			A = (bytes[0x01] >> 0) & 0x0f
 
 			if self.format_id == '12x':
-				self.desc = '%s v%d, v%d' % (op_map[op], A, B)
+				self.desc = '%s v%d, v%d' % (formatOp(op), A, B)
 			elif self.format_id == '11n':
-				self.desc = '%s v%d, #+%x' % (op_map[op], A, B)
+				self.desc = '%s v%d, #+%x' % (formatOp(op), A, B)
 
 		elif self.format_id == '11x' or self.format_id == '10t':
 			self.bytes_size = 0x02
@@ -58,9 +58,9 @@ class InsnsItem(object):
 			AA = bytes[0x01]
 
 			if self.format_id == '11x':
-				self.desc = '%s v%d' % (op_map[op], AA)
+				self.desc = '%s v%d' % (formatOp(op), AA)
 			elif self.format_id == '10t':
-				self.desc = '%s +v%d' % (op_map[op], AA)
+				self.desc = '%s +v%d' % (formatOp(op), AA)
 
 		elif self.format_id == '20t':
 			self.bytes_size = 0x04
@@ -68,7 +68,7 @@ class InsnsItem(object):
 			op = bytes[0x00]
 			AAAA = (bytes[0x02] << 0) | (bytes[0x03] << 8)
 
-			self.desc = '%s +%.4x' % (op_map[op], AAAA)
+			self.desc = '%s +%.4x' % (formatOp(op), AAAA)
 
 		elif self.format_id == '20bc':
 			self.bytes_size = 0x04
@@ -77,7 +77,7 @@ class InsnsItem(object):
 			AA = bytes[0x01]
 			BBBB = (bytes[0x02] << 0) | (bytes[0x03] << 8)
 
-			self.desc = '%s %.2d, %s' % (op_map[op], AA, '%s')
+			self.desc = '%s %.2d, %s' % (formatOp(op), AA, '%s')
 			self.kind_x = BBBB
 
 		elif self.format_id == '22x' \
@@ -93,15 +93,15 @@ class InsnsItem(object):
 			BBBB = (bytes[0x02] << 0) | (bytes[0x03] << 8)
 
 			if self.format_id == '22x':
-				self.desc = '%s v%d, v%d' % (op_map[op], AA, BBBB)
+				self.desc = '%s v%d, v%d' % (formatOp(op), AA, BBBB)
 			elif self.format_id == '21t':
-				self.desc = '%s v%d, +%.4x' % (op_map[op], AA, BBBB)
+				self.desc = '%s v%d, +%.4x' % (formatOp(op), AA, BBBB)
 			elif self.format_id == '21s':
-				self.desc = '%s v%d, #+%.4x' % (op_map[op], AA, BBBB)
+				self.desc = '%s v%d, #+%.4x' % (formatOp(op), AA, BBBB)
 			elif self.format_id == '21h':
-				self.desc = '%s v%d, #+%.4x0000' % (op_map[op], AA, BBBB)
+				self.desc = '%s v%d, #+%.4x0000' % (formatOp(op), AA, BBBB)
 			elif self.format_id == '21c':
-				self.desc = '%s v%d, %s' % (op_map[op], AA, '%s')
+				self.desc = '%s v%d, %s' % (formatOp(op), AA, '%s')
 				self.kind_x = BBBB
 
 		elif self.format_id == '23x' or self.format_id == '22b':
@@ -113,9 +113,9 @@ class InsnsItem(object):
 			CC = bytes[0x03]
 
 			if self.format_id == '23x':
-				self.desc = '%s v%d, v%d, v%x' % (op_map[op], AA, BB, CC)
+				self.desc = '%s v%d, v%d, v%x' % (formatOp(op), AA, BB, CC)
 			elif self.format_id == '22b':
-				self.desc = '%s v%d, v%d, #+%.2x' % (op_map[op], AA, BB, CC)
+				self.desc = '%s v%d, v%d, #+%.2x' % (formatOp(op), AA, BB, CC)
 
 		elif self.format_id == '22t' \
 			or self.format_id == '22s' \
@@ -130,14 +130,14 @@ class InsnsItem(object):
 			CCCC = (bytes[0x02] << 0) | (bytes[0x03] << 8)
 
 			if self.format_id == '22t':
-				self.desc = '%s v%d, v%d, +%.4x' % (op_map[op], A, B, CCCC)
+				self.desc = '%s v%d, v%d, +%.4x' % (formatOp(op), A, B, CCCC)
 			elif self.format_id == '22s':
-				self.desc = '%s v%d, v%d, #+%.4x' % (op_map[op], A, B, CCCC)
+				self.desc = '%s v%d, v%d, #+%.4x' % (formatOp(op), A, B, CCCC)
 			elif self.format_id == '22c':
-				self.desc = '%s v%d, v%d, %s' % (op_map[op], A, B, '%s')
+				self.desc = '%s v%d, v%d, %s' % (formatOp(op), A, B, '%s')
 				self.kind_x = CCCC
 			elif self.format_id == '22cs':
-				self.desc = '%s v%d, v%d, %s' % (op_map[op], A, B, '%s')
+				self.desc = '%s v%d, v%d, %s' % (formatOp(op), A, B, '%s')
 				self.kind_x = CCCC
 
 		elif self.format_id == '30t':
@@ -146,7 +146,7 @@ class InsnsItem(object):
 			op = bytes[0x00]
 			AAAAAAAA = (bytes[0x02] << 0) | (bytes[0x03] << 8) | (bytes[0x04] << 16) | (bytes[0x05] << 24)
 
-			self.desc = '%s +%.8x' % (op_map[op], AAAAAAAA)
+			self.desc = '%s +%.8x' % (formatOp(op), AAAAAAAA)
 
 		elif self.format_id == '32x':
 			self.bytes_size = 0x06
@@ -155,7 +155,7 @@ class InsnsItem(object):
 			AAAA = (bytes[0x02] << 0) | (bytes[0x03] << 8)
 			BBBB = (bytes[0x04] << 0) | (bytes[0x05] << 8)
 
-			self.desc = '%s v%d, v%d' % (op_map[op], AAAA, BBBB)
+			self.desc = '%s v%d, v%d' % (formatOp(op), AAAA, BBBB)
 
 		elif self.format_id == '31i' \
 			or self.format_id == '31t' \
@@ -168,11 +168,11 @@ class InsnsItem(object):
 			BBBBBBBB = (bytes[0x02] << 0) | (bytes[0x03] << 8) | (bytes[0x04] << 16) | (bytes[0x05] << 24)
 
 			if self.format_id == '31i':
-				self.desc = '%s v%d, #+%.8x' % (op_map[op], AA, BBBBBBBB)
+				self.desc = '%s v%d, #+%.8x' % (formatOp(op), AA, BBBBBBBB)
 			elif self.format_id == '31t':
-				self.desc = '%s v%d, +%.8x' % (op_map[op], AA, BBBBBBBB)
+				self.desc = '%s v%d, +%.8x' % (formatOp(op), AA, BBBBBBBB)
 			elif self.format_id == '31c':
-				self.desc = '%s v%d, %s' % (op_map[op], AA, '%s')
+				self.desc = '%s v%d, %s' % (formatOp(op), AA, '%s')
 				self.kind_x = BBBBBBBB
 
 		elif self.format_id == '35c' \
@@ -190,22 +190,22 @@ class InsnsItem(object):
 			F = (bytes[0x05] >> 4) & 0x0f
 
 			if A == 0:
-				self.desc = '%s {}, %s' % (op_map[op], '%s')
+				self.desc = '%s {}, %s' % (formatOp(op), '%s')
 				self.kind_x = BBBB
 			elif A == 1:
-				self.desc = '%s {v%d}, %s' % (op_map[op], C, '%s')
+				self.desc = '%s {v%d}, %s' % (formatOp(op), C, '%s')
 				self.kind_x = BBBB
 			elif A == 2:
-				self.desc = '%s {v%d, v%d}, %s' % (op_map[op], C, D, '%s')
+				self.desc = '%s {v%d, v%d}, %s' % (formatOp(op), C, D, '%s')
 				self.kind_x = BBBB
 			elif A == 3:
-				self.desc = '%s {v%d, v%d, v%d}, %s' % (op_map[op], C, D, E, '%s')
+				self.desc = '%s {v%d, v%d, v%d}, %s' % (formatOp(op), C, D, E, '%s')
 				self.kind_x = BBBB
 			elif A == 4:
-				self.desc = '%s {v%d, v%d, v%d, v%d}, %s' % (op_map[op], C, D, E, F, '%s')
+				self.desc = '%s {v%d, v%d, v%d, v%d}, %s' % (formatOp(op), C, D, E, F, '%s')
 				self.kind_x = BBBB
 			elif A == 5:
-				self.desc = '%s {v%d, v%d, v%d, v%d, v%d}, %s' % (op_map[op], C, D, E, F, G, '%s')
+				self.desc = '%s {v%d, v%d, v%d, v%d, v%d}, %s' % (formatOp(op), C, D, E, F, G, '%s')
 				self.kind_x = BBBB
 
 		elif self.format_id == '3rc' \
@@ -219,7 +219,7 @@ class InsnsItem(object):
 			CCCC = (bytes[0x04] << 0) | (bytes[0x05] << 8)
 			NNNN = CCCC + AA - 1
 
-			self.desc = '%s {v%d ... v%d} %s' % (op_map[op], CCCC, NNNN, '%s')
+			self.desc = '%s {v%d ... v%d} %s' % (formatOp(op), CCCC, NNNN, '%s')
 			self.kind_x = BBBB
 
 		elif self.format_id == '45cc':
@@ -237,23 +237,23 @@ class InsnsItem(object):
 			HHHH = (bytes[0x06] << 0) | (bytes[0x07] << 8)
 
 			if A == 1:
-				self.desc = '%s {v%d}, %s, %s' % (op_map[op], C, '%s', '%s')
+				self.desc = '%s {v%d}, %s, %s' % (formatOp(op), C, '%s', '%s')
 				self.kind_x = BBBB
 				self.proto_x = HHHH
 			elif A == 2:
-				self.desc = '%s {v%d, v%d}, %s, %s' % (op_map[op], C, D, '%s', '%s')
+				self.desc = '%s {v%d, v%d}, %s, %s' % (formatOp(op), C, D, '%s', '%s')
 				self.kind_x = BBBB
 				self.proto_x = HHHH
 			elif A == 3:
-				self.desc = '%s {v%d, v%d, v%d}, %s, %s' % (op_map[op], C, D, E, '%s', '%s')
+				self.desc = '%s {v%d, v%d, v%d}, %s, %s' % (formatOp(op), C, D, E, '%s', '%s')
 				self.kind_x = BBBB
 				self.proto_x = HHHH
 			elif A == 4:
-				self.desc = '%s {v%d, v%d, v%d, v%d}, %s, %s' % (op_map[op], C, D, E, F, '%s', '%s')
+				self.desc = '%s {v%d, v%d, v%d, v%d}, %s, %s' % (formatOp(op), C, D, E, F, '%s', '%s')
 				self.kind_x = BBBB
 				self.proto_x = HHHH
 			elif A == 5:
-				self.desc = '%s {v%d, v%d, v%d, v%d, v%d}, %s, %s' % (op_map[op], C, D, E, F, G, '%s', '%s')
+				self.desc = '%s {v%d, v%d, v%d, v%d, v%d}, %s, %s' % (formatOp(op), C, D, E, F, G, '%s', '%s')
 				self.kind_x = BBBB
 				self.proto_x = HHHH
 
@@ -267,7 +267,7 @@ class InsnsItem(object):
 			HHHH = (bytes[0x06] << 0) | (bytes[0x07] << 8)
 			NNNN = CCCC + AA - 1
 
-			self.desc = '%s> {v%d ... v%d}, %s, %s' % (op_map[op], CCCC, NNNN, '%s', '%s')
+			self.desc = '%s> {v%d ... v%d}, %s, %s' % (formatOp(op), CCCC, NNNN, '%s', '%s')
 			self.kind_x = BBBB
 			self.proto_x = HHHH
 
@@ -281,7 +281,7 @@ class InsnsItem(object):
 			BBBBBBBBBBBBBBBB |= (bytes[0x06] << 32) | (bytes[0x07] << 40)
 			BBBBBBBBBBBBBBBB |= (bytes[0x04] << 48) | (bytes[0x09] << 56)
 
-			self.desc = '%s v%d, #+%.16x' % (op_map[op], AA, BBBBBBBBBBBBBBBB)
+			self.desc = '%s v%d, #+%.16x' % (formatOp(op), AA, BBBBBBBBBBBBBBBB)
 
 		self.bytes = bytes[0x00:self.bytes_size]
 
