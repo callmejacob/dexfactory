@@ -38,11 +38,17 @@ class OdexInfo(object):
 		self.opt_size = self.header.opt_size
 		self.opt = OdexOpt(self.bytes[self.opt_off:self.opt_off+self.opt_size])
 
+	def saveDex(self, dex_path):
+		if not dex_path is None:
+			dex_bytes = self.bytes[self.dex_off:self.dex_off+self.dex_size]
+			dex_bytes.tofile(dex_path)
+
 	def tostring(self):
 		string = ''
 		string += self.header.tostring()
 		if not self.dex is None:
 			string += self.dex.tostring()
 		string += self.deps.tostring()
-		string += self.opt.tostring()
+		if not self.opt is None:
+			string += self.opt.tostring()
 		return string

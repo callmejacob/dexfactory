@@ -17,7 +17,7 @@ class MethodRegisterMapItem(object):
 		off = 0x00
 
 		if index_width == 1:
-			self.cur_insns_index = (byte[off] << 0)
+			self.cur_insns_index = (bytes[off] << 0)
 			off += 0x01
 		else:
 			self.cur_insns_index = (bytes[off] << 0) | (bytes[off+0x01] << 8)
@@ -30,7 +30,7 @@ class MethodRegisterMapItem(object):
 			self.cur_insns_registers_status = (bytes[off] << 0) | (bytes[off+0x01] << 8)
 			off += 0x02
 
-		self.bytes = byte[0x00:off]
+		self.bytes = bytes[0x00:off]
 
 	def tostring(self):
 		string = ''

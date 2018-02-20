@@ -280,7 +280,7 @@ class DexInfo(object):
 		"""
 		if dex_path is None:
 			dex_path = self.dex_path
-		if not self.dex_path is None:
+		if not dex_path is None:
 			self.dex_bytes.tofile(dex_path)
 
 	def recalSigAndChecksum(self):
